@@ -1,23 +1,22 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import PIL.Image
 
-def ft_load(path: str)-> np.ndarray:
+
+def ft_load(path: str) -> np.ndarray:
     try:
         img = PIL.Image.open(path)
-        if img.format not in ["JPEG", "JPG"
-                              ]:
-            return ValueError("Unsupported image format. Only JPG and JPEG are allowed.")
+        if img.format not in ["JPEG", "JPG"]:
+            return ValueError("Unsupported image format.\
+                Only JPG and JPEG are allowed.")
 
         # print("Image format:", img.format)
         width, height = img.size
-        print(f"Image size: {width}x{height} pixels")
-        
+        # print(f"Image size: {width}x{height} pixels")
 
         img_array = np.array(img)
-        print("The shape of image is:", img_array.shape)
-        print("Pixel content in RGB format:")
-        print(img_array)
+        # print("The shape of image is:", img_array.shape)
+        # print("Pixel content in RGB format:")
+        # print(img_array)
 
         return img_array
     except ValueError as e:
@@ -59,4 +58,3 @@ def ft_load(path: str)-> np.ndarray:
 
 #         # Display the zoomed image
 #         display_image(zoomed_array, "Zoomed Image")
-

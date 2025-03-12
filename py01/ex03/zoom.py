@@ -2,7 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from load_image import ft_load
 
-def trim(array : np.array, x : int, y : int, width : int, height : int, depth=3) -> np.array :
+
+def trim(array: np.array, x: int, y: int, width: int, height: int, depth=3) ->\
+        np.array:
     """
         Trim an array using the given parameters
     """
@@ -21,8 +23,8 @@ def main():
         print(e)
         exit()
 
-    print('The shape of image is', image.shape)
-    print(image)
+    # print('The shape of image is', image.shape)
+    # print(image)
 
     image = trim(image, 450, 100, 400, 400, 1)
 
@@ -33,7 +35,7 @@ def main():
     # Display the image
     # image = np.squeeze(image)
     plt.imshow(image, cmap='gray')
-    plt.axis('off')
+    # plt.axis('off')
     plt.show()
 
 
