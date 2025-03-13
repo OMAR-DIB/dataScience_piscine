@@ -9,7 +9,7 @@ def ft_filter(func, iterator):
         for i in iterator:
             if func(i):
                 yield i
-    else: 
+    else:
         for i in iterator:
             if i:
                 yield i

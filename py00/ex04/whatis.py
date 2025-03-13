@@ -1,7 +1,8 @@
 import sys
 def whatis(av):
     if len(av) == 1:
-        print()
+        print("AssertionError: no argument")
+        #return AssertionError("no argument")
     elif len(av) > 2:
         print("AssertionError: more than one argument is provided")
     else:
