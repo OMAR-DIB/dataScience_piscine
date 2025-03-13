@@ -11,11 +11,11 @@ def give_bmi(height: list[int | float], weight: list[int | float]) ->\
         return ValueError("Height and weight lists must\
             be of the same length.")
     height_metre = np.array(height)
-
+    h = height_metre.tolist()
     index = 0
     bmi = []
-    for i in height:
-        bmi.append(weight[index] / (height_metre[index] ** 2))
+    for i in h:
+        bmi.append(weight[index] / (h[index] ** 2))
         index += 1
     return bmi
 
@@ -27,8 +27,8 @@ def apply_limit(bmi: list[int | float], limit: int) -> list[bool]:
     return (np.array(bmi) > limit).tolist()
 
 
-height = [2.71, 1.15]
-weight = [165.3, 38.4]
-bmi = give_bmi(height, weight)
-print(bmi, type(bmi))
-print(apply_limit(bmi, 26))
+#height = [2.71, 1.15]
+#weight = [165.3, 38.4]
+#bmi = give_bmi(height, weight)
+#print(bmi, type(bmi))
+#print(apply_limit(bmi, 26))
