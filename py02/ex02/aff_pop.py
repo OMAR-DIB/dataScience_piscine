@@ -1,85 +1,60 @@
-from load_csv import load
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
+from load_csv import load
 
-def aff_pop():
-    """Displays population trends for two countries from 1800 to 2050."""
-    country_2 = "Angola"
-    country_1 = "Albania"
-    df = load('../CSV/population_total.csv')
-    # print(var)
-    # Extract data and handle possible KeyErrors
+
+def get_values(row):
+    """
+        Take an array and return a new array with the values
+        as float (replacing human-readable format)
+    """
+    return [
+        float(i.replace('k', 'e3').replace('M', 'e6'))
+        for i in row.to_numpy()
+    ]
+
+
+def main():
+    """
+        Display a graph that compares the population projection
+        of France vs Belgium
+    """
+    df = load("population_total.csv")
+
+    first_country = df.loc['France']
+    second_country = df.loc['Belgium']
+
     try:
-        uae_data = df.loc[country_2]
-        france_data = df.loc[country_1]
-    except KeyError as e:
-        print(f"Error: {e} not found in the dataset.")
-        return
+        years = first_country.index.astype(int).to_numpy()
+    except Exception:
+        print("Error: Years must be integers")
+        exit(0)
 
-    # Convert index to integers and filter years
-    france_data.index = france_data.index.astype(int)
-    uae_data.index = uae_data.index.astype(int)
-    france_data = france_data[(france_data.index >= 1800) & (france_data.index <= 2050)]
-    uae_data = uae_data[(uae_data.index >= 1800) & (uae_data.index <= 2050)]
+    plt.gca().yaxis.set_major_formatter(
+        plt.FuncFormatter(lambda x, _: f'{x/1e6:.0f}M'))
 
-    # Plotting
-    plt.figure(figsize=(12, 6))
-    plt.plot(france_data.index, france_data.values, 'b-', label=country_1)
-    plt.plot(uae_data.index, uae_data.values, 'r--', label=country_2)
+    years_filtered = years[(years >= 1800) & (years <= 2050)]
 
-    # Format y-axis to show values in millions
-    plt.gca().yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'{x/1e6:.0f}M'))
+    plt.plot(
+        years_filtered,
+        get_values(first_country.loc[years_filtered.astype(str)]),
+        label='France',
+        color='g'
+    )
+    plt.plot(
+        years_filtered,
+        get_values(second_country.loc[years_filtered.astype(str)]),
+        label='Belgium',
+        color='b'
+    )
 
-    plt.title("Population Growth Comparison")
-    plt.xlabel("Year")
-    plt.ylabel("Population")
-    plt.legend(loc="upper left")
+    plt.title('Population Projections')
+    plt.ylabel('Population')
+    plt.xlabel('Year')
+    plt.legend()
+    plt.xticks([year for year in years_filtered if year % 40 == 0])
+    plt.yticks([20_000_000, 40_000_000, 60_000_000])
     plt.show()
 
-aff_pop()
 
-
-
-
-
-
-# from load_csv import load
-# import numpy as np
-# import pandas as pd
-# import matplotlib.pyplot as plt
-
-# def aff_pop(df: pd.DataFrame):
-#     """Displays population trends for two countries from 1800 to 2050."""
-#     # Define countries
-#     country_1 = "France"  # Change this if needed
-#     country_2 = "United Arab Emirates"  # Change this if needed
-
-#     # Extract data
-#     country_1_data = df.loc[country_1]
-#     country_2_data = df.loc[country_2]
-
-#     # Convert index (years) to integers
-#     country_1_data.index = country_1_data.index.astype(int)
-#     country_2_data.index = country_2_data.index.astype(int)
-
-#     # Filter data from 1800 to 2050
-#     country_1_data = country_1_data[(country_1_data.index >= 1800) & (country_1_data.index <= 2050)]
-#     country_2_data = country_2_data[(country_2_data.index >= 1800) & (country_2_data.index <= 2050)]
-
-#     # Plot the data
-#     plt.figure(figsize=(12, 6))
-#     plt.plot(country_1_data.index, country_1_data.values, linestyle="-", color="b", label=country_1)
-#     plt.plot(country_2_data.index, country_2_data.values, linestyle="--", color="r", label=country_2)
-
-#     # Titles and labels
-#     plt.title("Population Growth (1800 - 2050)", fontsize=14)
-#     plt.xlabel("Year", fontsize=12)
-#     plt.ylabel("Population", fontsize=12)
-#     plt.legend()
-#     # plt.grid(True)
-
-#     # Show the plot
-#     plt.show()
-
-# # Load CSV and display the graph
-# aff_pop(load('../CSV/population_total.csv'))
+if __name__ == "__main__":
+    main()
