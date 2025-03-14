@@ -12,14 +12,3 @@ def all_thing_is_obj(object: any)-> int:
     else:
         print("Type not found")
     return 42
-
-# ft_tuple = ("Hello", "toto!")
-# ft_dict = {"Hello" : "titi!"}
-# ft_set = {"Hello", "tutu!"}
- 
-# all_thing_is_obj(["Hello", "tata!"])
-# all_thing_is_obj(ft_tuple)
-# all_thing_is_obj(ft_dict)
-# all_thing_is_obj(ft_set)
-# print(all_thing_is_obj(10))
-# all_thing_is_obj("helo")

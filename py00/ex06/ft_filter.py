@@ -1,15 +1,16 @@
-# print(filter.__doc__)
+
 
 def ft_filter(func, iterator):
     """
-    filtering elements from an existing iterable based on a given condition
-    return true if condition ok false if not ok
+    Return an iterator yielding those items
+    of iterable for which function(item)
+    is true. If function is None, return the items that are true.
     """
     if func:
         for i in iterator:
             if func(i):
                 yield i
-    else: 
+    else:
         for i in iterator:
             if i:
                 yield i
